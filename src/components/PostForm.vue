@@ -16,8 +16,8 @@ name: "PostForm",
 data() {
 return {
 title: '',
-body: ''    
-}    
+body: ''
+}
 },
 
 methods: {
@@ -28,7 +28,7 @@ submit() {
 this.createPost({
 title: this.title,
 body: this.body,
-id: Date.now()    
+id: Date.now()
 });
 this.title = '';
 this.body = '';
@@ -40,7 +40,7 @@ this.body = '';
 
 <style>
 input{
-display: block;    
+display: block;
 width: 100%;
 border: 1px solid #ccc;
 border-radius: 2px;

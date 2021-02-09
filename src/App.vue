@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-   
+
    <h1>{{ postsCount }}</h1>
 
-   <div class="post" 
-   v-for="post in allPosts" 
+   <div class="post"
+   v-for="post in validPosts"
    :key="post.id"
    >
    <h3>{{ post.title }}</h3>
    <p>{{ post.body }}</p>
-   </div> 
+   </div>
 
    <PostForm/>
 
@@ -26,21 +26,21 @@ export default {
   name: 'App',
 
   components: {
-  PostForm 
+  PostForm
   },
-  
+
   // Importing vuex getters
   // Здесь всегда массив строк, который должен совпадать с функциями там
-  computed: mapGetters(["allPosts", "postsCount"]),
-  
+  computed: mapGetters(["postsCount", "validPosts"]),
+
   // Вызываем экшн в родительском компоненте
   methods:  mapActions(["fetchPosts"]),
-  
+
   // Вызываем action при загрузке компонента
   mounted() {
   this.fetchPosts(3);
   },
-  
+
 
 
 }
@@ -65,7 +65,7 @@ padding: 3px 30px;
 }
 
 .post:hover{
-background-color: rgb(0, 92, 46);  
+background-color: rgb(0, 92, 46);
 color: #fff;
 cursor: pointer;
 }

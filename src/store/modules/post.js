@@ -5,26 +5,32 @@ export default {
   // Здесь просто хранятся данные, которые потом отправляються компоненту vue
   // Компонент vue отрисовывает данные из state при помощи фукнции render
   // Иными словами, компонент рендерится
-  
+
   // Метод render
   state: {
   posts: [] //Просто пустой исходный пустой массив
   },
-  
+
   // Получаем данные из state
   getters: {
+
+  validPosts(state) {
+  return state.posts.filter(e => {
+  return e.title && e.body;
+  })
+  },
 
   allPosts(state) { //Первый параметр всегда state
   return state.posts; // Возвращаем массив posts из state
   },
- 
-  postsCount(state) { //Получаем количество постов
-  return state.posts.length;
+
+  postsCount(state, getters) { //Получаем количество постов, второй параметр - это другой геттер
+  return getters.validPosts.length; //Возвращаем длинну другого геттера
   },
 
-  }, 
-   
-   /* Когда данные загрузились или же когда мы изменили что-то в 
+  },
+
+   /* Когда данные загрузились или же когда мы изменили что-то в
    actions мы с помощью метода commit - вызываем мутации
    */
 
@@ -32,7 +38,7 @@ export default {
   // Методы только синхронные
   // Метод mutate
   mutations: {
-  
+
   updatePosts(state, posts) { // Первый параметр всегда state
   state.posts = posts;
   },
@@ -43,19 +49,19 @@ export default {
   }
 
   },
-  
- /* Если происходит какое-то событие во vue компоненте, 
+
+ /* Если происходит какое-то событие во vue компоненте,
  то мы с помощью функции dispatch вызываем actions, которые могут быть
  асинхронными (fetch запросы кладем сюда?) и работают с backend API
  */
-  
+
   // Метод commit
   actions: {
 
   async fetchPosts(ctx, limit = 3) { //В actions первый параметр всегда контекст ctx
 
   const res = await fetch(  // Получаем данные от АПИ
-  'https://jsonplaceholder.typicode.com/posts?_limit=' + limit   
+  'https://jsonplaceholder.typicode.com/posts?_limit=' + limit
   );
 
   const posts = await res.json(); // Кладем в переменную posts данные от АПИ в формате JSON
@@ -65,5 +71,5 @@ export default {
 
 
   },
-   
+
 }
